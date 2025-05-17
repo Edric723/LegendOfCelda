@@ -62,11 +62,11 @@ var arboles = new List<(int w, int h, int columna, int fila)>
         };
 
 // Agregar obstáculos al mapa
-Mapa.AgregarGrupoObstaculos(mapa, lagos, '«', ConsoleColor.Blue);
 
-Mapa.AgregarGrupoObstaculos(mapa, montañas, '█', ConsoleColor.DarkMagenta);
+mapa.AgregarGrupoObstaculos(lagos, '«', ConsoleColor.Blue);
+mapa.AgregarGrupoObstaculos(montañas, '█', ConsoleColor.DarkMagenta);
+mapa.AgregarGrupoObstaculos(arboles, '╦', ConsoleColor.Green);
 
-Mapa.AgregarGrupoObstaculos(mapa, arboles, '╦', ConsoleColor.Green);
 
 
 
@@ -79,18 +79,6 @@ mapa.ColocarEntidad(jugador);
 // ENEMIGO-------------------------------
 var goblin1 = new Enemigo(3, 10, 'G', ConsoleColor.Red, "Goblin", 2);
 mapa.ColocarEntidad(goblin1);
-
-Console.WriteLine(Enemigo.Enemigos.Count);
-
-Casilla actual = mapa.casillas[10, 2];
-Trampa trampa = new Trampa('X', ConsoleColor.Red);
-trampa.Ocupante = actual.Ocupante; // mantener ocupante si hay
-mapa.casillas[10, 2] = trampa;
-//mapa.casillas[10,2]= new Trampa ('X',ConsoleColor.Red);
-
-
-
-
 // Generar aleatoriamente enemigos y spawn points.
 Random random = new(); // Inicializar un generador de números aleatorios.
 for (int i = 0; i < 6; i++)
@@ -111,6 +99,13 @@ for (int i = 0; i < 6; i++)
     }
 }
 
+
+
+// TRAMPAS
+Casilla actual = mapa.casillas[10, 2];
+Trampa trampa = new('X', ConsoleColor.Red);
+trampa.Ocupante = actual.Ocupante; // mantener ocupante si hay
+mapa.casillas[10, 2] = trampa;
 
 
 // Imprimir el mapa por primera vez
@@ -158,17 +153,3 @@ while (true)
 
 
 }
-
-
-
-//Experimento del profe
-/*
-Dictionary<int, int> test = new Dictionary<int, int>();
-test[0] = 1;
-test[1] = 2;
-test[2] = 3;
-test[3] = 4;
-foreach (var i in test)
-{
-    Console.WriteLine(i.Value);
-}*/

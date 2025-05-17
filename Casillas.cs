@@ -11,7 +11,6 @@ namespace PracticaParaElRepo
         public char simboloBase; //
         public Entidad? Ocupante { get; set; }
         public ConsoleColor ColorBase { get; set; }
-        //public ConsoleColor ColorMostrado { get; set; }
         public bool Caminable;
 
 
@@ -19,12 +18,11 @@ namespace PracticaParaElRepo
         {
             simboloBase = simbolo;
             ColorBase = color;
-            //ColorMostrado = color;
             Ocupante = null;
             Caminable = true;
         }
 
-        // Por el momento sin uso.
+
         public char Simbolo()
         {
             if (Ocupante != null)

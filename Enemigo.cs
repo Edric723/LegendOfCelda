@@ -10,7 +10,7 @@ public class Enemigo : Entidad // Herencia de la clase entidad.
     public bool EstaActivo; // Enemigo patrullando
     public int direccionX;
     public int direccionY;
-    public static List<Enemigo> Enemigos = new List<Enemigo>();
+    public static List<Enemigo> Enemigos = [];
 
     public Enemigo(int posicionX, int posicionY, char simbolo, ConsoleColor color, string nombre, int vida)
         : base(posicionX, posicionY, simbolo, color)
@@ -61,9 +61,12 @@ public class Enemigo : Entidad // Herencia de la clase entidad.
 
         Console.WriteLine($"Enemigo {Nombre} en ({PosicionX},{PosicionY}) recibió {cantidadDanio} de daño. Vida restante: {Vida}"); // FLAG de testeo
 
-        if (Vida <= 0) // Si està muerto lo limpiamos del mapa y lo eliimanos de la lista de enemigos
+        if (Vida == 0) // Si està muerto lo limpiamos del mapa y lo eliimanos de la lista de enemigos
         {
-            Mapa.instance.casillas[PosicionY, PosicionX].Ocupante = null;
+            if (Mapa.instance != null)
+                Mapa.instance.casillas[PosicionY, PosicionX].Ocupante = null;
+
+            
             // Enemigo.Enemigos.Remove(this);
             EstaActivo = false;
             

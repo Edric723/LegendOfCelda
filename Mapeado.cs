@@ -142,19 +142,6 @@ namespace PracticaParaElRepo
             return true;
         }
 
-        // Indica si una casilla puede ser atravesada por una entidad.
-        //public bool EsPasable(int fila, int columna, Entidad entidad)
-        //{
-        //    if (!EsPosicionValida(fila,columna)) // Si la fila o la columna NO están dentro del mapa
-        //        return false;
-
-        //    return casillas[fila, columna].EsTransitable(entidad);// Solo se puede caminar sobre celdas de piso
-        //}
-
-
-
-
-
         public void Mostrar()
         {
             Console.SetCursorPosition(0, 0); // Sobre-escribe el mapa sin hacer Clear
@@ -242,46 +229,25 @@ namespace PracticaParaElRepo
 
 
 
-
         // Funciones Auxiliares que me permiten agregar obstaculos al mapa.
-        public void AgregarObstaculo(Obstaculo obstaculo)
+
+        // Agrega un solo obstáculo en la posición dada
+        public void AgregarObstaculo(int fila, int columna, char simbolo = '#', ConsoleColor color = ConsoleColor.DarkGray)
         {
-            obstaculo.DibujarObstaculo(casillas);
+            if (EsPosicionValida(fila, columna))
+                casillas[fila, columna] = new Obstaculo(simbolo, color);
         }
 
-        public static void AgregarGrupoObstaculos(Mapa mapa, List<(int w, int h, int x, int y)> datos, char simbolo, ConsoleColor color)
+        // Agrega un bloque rectangular de obstáculos
+        public void AgregarGrupoObstaculos(List<(int w, int h, int x, int y)> datos, char simbolo, ConsoleColor color)
         {
             foreach (var (w, h, x, y) in datos)
-                mapa.AgregarObstaculo(new Obstaculo(w, h, x, y, simbolo, color));
-        }
-    }
-
-
-
-
-    public class Obstaculo(int width, int height, int xPosition, int yPosition, char symbol, ConsoleColor color)
-    {
-        public int height = height;
-        public int width = width;
-        public int xPosition = xPosition;
-        public int yPosition = yPosition;
-        public char symbol = symbol;
-        public ConsoleColor color = color;
-
-        // Función que dibuja el obstáculo en el mapa    FILA = EJE Y / COLUMNA = EJE X
-        public void DibujarObstaculo(Casilla[,] casillas)
-        {
-            // Iteramos sobre las filas y columnas que dibujaremos
-            for (int fila = yPosition; fila < yPosition + height; fila++)
             {
-                for (int columna = xPosition; columna < xPosition + width; columna++)
+                for (int fila = y; fila < y + h; fila++)
                 {
-                    // Asegurarse de que no se salga del mapa
-                    if (fila < casillas.GetLength(0) && columna < casillas.GetLength(1))
+                    for (int columna = x; columna < x + w; columna++)
                     {
-                        casillas[fila, columna].simboloBase = symbol; // Coloca el obstáculo en el mapa.
-                        casillas[fila, columna].ColorBase = color; // Colorea el obstáculo.
-                        casillas[fila, columna].Caminable = false;
+                        AgregarObstaculo(fila, columna, simbolo, color);
                     }
                 }
             }
